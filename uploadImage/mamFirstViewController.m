@@ -35,12 +35,12 @@
 //    NSURL *filePath = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"avatar.jpg" ofType:nil]];
     
     NSData *imageData = UIImageJPEGRepresentation(self.avatarImage, 1.0);
-    NSDictionary *parameters = @{@"avatar": @""};
+//    NSDictionary *parameters = @{@"newKey": @""};
     
     NSMutableURLRequest *request = [manager.requestSerializer
                                     multipartFormRequestWithMethod:@"POST"
-                                    URLString:@"http://mimikj.com:6543/"
-                                    parameters:parameters
+                                    URLString:@"http://mimikj.com:6543/avatar"
+                                    parameters:nil
                                     constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                                         [formData appendPartWithFileData:imageData
                                                                     name:@"avatar"
@@ -48,8 +48,10 @@
                                                                 mimeType:@"image/jpeg"];
                                     }
                                     error:nil];
+//    [request addValue:@"multipart/form-data;boundary=HYdxPb8dVKru0Nq8MKSS2kXFokG3ITu5" forHTTPHeaderField:@"Content-Type"];
     NSDictionary *sheaders = @{@"Cookie" : @"auth_tkt=\"bd681aa4b8f64f4e4a635c4c1aa8de38b355038b0a34577a48109a92bfcede8652d837d2207b8546433142446b011458717af667a612b2dc9ac07e508a265301534e38d4MTU2MDAwMDExMTE%3D!userid_type:b64unicode\"; auth_tkt=\"bd681aa4b8f64f4e4a635c4c1aa8de38b355038b0a34577a48109a92bfcede8652d837d2207b8546433142446b011458717af667a612b2dc9ac07e508a265301534e38d4MTU2MDAwMDExMTE%3D!userid_type:b64unicode\"; auth_tkt=\"bd681aa4b8f64f4e4a635c4c1aa8de38b355038b0a34577a48109a92bfcede8652d837d2207b8546433142446b011458717af667a612b2dc9ac07e508a265301534e38d4MTU2MDAwMDExMTE%3D!userid_type:b64unicode\""};
     [request setAllHTTPHeaderFields:sheaders];
+    
     
     AFHTTPRequestOperation *operation = [manager HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"success. upload,%@", responseObject);
