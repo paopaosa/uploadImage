@@ -10,4 +10,6 @@
 
 @interface mamFirstViewController : UIViewController
 
+- (IBAction)uploadImage:(id)sender;
+
 @end
